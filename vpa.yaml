@@ -1,11 +1,12 @@
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
   name: myhpa
 spec:
-  targetRef:
-    apiVersion: "apps/v1"
+  scaleTargetRef:
+    apiVersion: apps/v1
     kind: Deployment
     name: myapp
-  updatePolicy:
-    updateMode: "Auto"  # VPA will automatically update the resource requests and limits
+  minReplicas: 1         # Minimale Anzahl von Replikaten
+  maxReplicas: 10        # Maximale Anzahl von Replikaten
+  targetCPUUtilizationPercentage: 5  # Ziel-CPU-Auslastung für das Skalieren
